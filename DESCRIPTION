@@ -1,5 +1,5 @@
 Package: aviandietdb
-Title: What the Package Does (One Line, Title Case)
+Title: Avian Diet Database Summary Functions
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Allen",
@@ -7,7 +7,9 @@ Authors@R:
            role = c("aut", "cre"),
            email = "hurlbert@bio.unc.edu",
            comment = c(ORCID = "0000-0002-5678-9907"))
-Description: What the package does (one paragraph).
+Description: This package contains functions for extracting and summarizing data from the Avian Diet Database.
 License: What license it uses
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/ahhurlbert/aviandietdb
+BugReports: https://github.com/ahhurlbert/aviandietdb/issues
