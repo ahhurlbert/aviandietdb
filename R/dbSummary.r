@@ -9,6 +9,8 @@
 
 dbSummary = function() {
 
+  require(dplyr)
+
   orders = unique(NA_specieslist[, c('order', 'family')]) %>%
     rename(Order = order, Family = family)
   species = unique(dietdb[, c('Common_Name', 'Family')])
