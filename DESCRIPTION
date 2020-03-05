@@ -13,3 +13,8 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/ahhurlbert/aviandietdb
 BugReports: https://github.com/ahhurlbert/aviandietdb/issues
+RoxygenNote: 7.0.2
+Imports:
+    dplyr,
+    stringr,
+    tidyr
