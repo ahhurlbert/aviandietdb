@@ -1,0 +1,70 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE, echo = FALSE, warning = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+
+library(dplyr)
+library(aviandietdb)
+library(scales)
+
+dbsum = dbSummary()
+```
+# aviandietdb
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+**aviandietdb** provides access to the Avian Diet Database, which contains quantitative diet data for bird species as well as contextual information about where and when those data were collected.
+
+The archived database currently includes **`r comma_format()(dbsum$numRecords)`** diet records for **`r dbsum$numSpecies`** bird species. This is a growing database, and while it is currently North American biased, we hope to continue adding avian diet data from around the world.
+
+You can find the development version of the database [here](https://github.com/hurlbertlab/dietdatabase).
+
+This R package provides a few simple functions for summarizing and querying the database.
+
+## Installation
+
+You can install **aviandietdb** from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("ahhurlbert/aviandietdb")
+```
+## Database
+
+Load the library and then the R data file that contains the raw data.
+
+```{r}
+library(aviandietdb)
+
+data(dietdb)
+```
+
+Typing `?dietdb` will provide a description of the 42 data fields in this database.
+
+A summary of the total number of records by species, and the total number of species with data by family is provided using `dbSummary()`.
+
+```{r}
+dbSummary()
+```
+
+## Summary functions
+
+For now, we provide just three simple ways to summarize data from the Diet Database.
+
+### speciesSummary()
+The `speciesSummary()` function provides a summary of what kinds of data are available for the specified bird species, as well as a quantitative summary at the taxonomic level specified. For example,
+
+```{r}
+speciesSummary("Sharp-shinned hawk", by = "Class")
+```
+
