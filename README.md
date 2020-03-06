@@ -226,11 +226,16 @@ prey taxon name, you must also specify the taxonomic level of that name.
 Like the `dietSummary()` function you can filter results just to
 particular seasons, regions, years, or types of diet data.
 
-The one additional argument is `larvaOnly`, which if TRUE, only returns
-records in which the specified prey taxon was consumed in larval form.
-If FALSE, records for any life stage are returned. This is most relevant
-for Lepidoptera and a few other insect groups, where one wants to single
-out the importance of caterpillars or other larvae.
+There are two additional argument not present in `dietSummary()`. One is
+`larvaOnly`, which if TRUE, only returns records in which the specified
+prey taxon was consumed in larval form. If FALSE, records for any life
+stage are returned. This is most relevant for Lepidoptera and a few
+other insect groups, where one wants to single out the importance of
+caterpillars or other larvae.
+
+This returns a summary at the level of individual studies, in which a
+single bird species might be listed multiple times because analyses were
+carried out in different, seasons, regions, years, etc.
 
 ``` r
 caterpillars = dietSummaryByPrey("Lepidoptera", preyLevel = "Order", dietType = "Items", larvaOnly = TRUE)
@@ -269,4 +274,28 @@ head(caterpillars, 10)
 #> 8  Lepidoptera     Order      TRUE
 #> 9  Lepidoptera     Order      TRUE
 #> 10 Lepidoptera     Order      TRUE
+```
+
+By specifying `speciesMean = TRUE`, only a single value is returned for
+each bird species that is the average across all analyses meeting the
+season, region, and year criteria.
+
+``` r
+caterpillarsMean = dietSummaryByPrey("Lepidoptera", preyLevel = "Order", dietType = "Items", larvaOnly = TRUE, speciesMean = TRUE)
+
+head(caterpillarsMean, 10)
+#> # A tibble: 10 x 7
+#> # Groups:   Common_Name, Family, Diet_Type, PreyName, PreyLevel [10]
+#>    Common_Name  Family Diet_Type Fraction_Diet PreyName PreyLevel LarvaOnly
+#>    <chr>        <chr>  <chr>             <dbl> <chr>    <chr>     <lgl>    
+#>  1 Philadelphi~ Vireo~ Items             0.686 Lepidop~ Order     TRUE     
+#>  2 Oak Titmouse Parid~ Items             0.663 Lepidop~ Order     TRUE     
+#>  3 Black-throa~ Parul~ Items             0.59  Lepidop~ Order     TRUE     
+#>  4 Blackburnia~ Parul~ Items             0.573 Lepidop~ Order     TRUE     
+#>  5 Black-throa~ Parul~ Items             0.542 Lepidop~ Order     TRUE     
+#>  6 Cerulean Wa~ Parul~ Items             0.524 Lepidop~ Order     TRUE     
+#>  7 Rose-breast~ Cardi~ Items             0.492 Lepidop~ Order     TRUE     
+#>  8 Cape May Wa~ Parul~ Items             0.484 Lepidop~ Order     TRUE     
+#>  9 Blue-headed~ Vireo~ Items             0.478 Lepidop~ Order     TRUE     
+#> 10 Tennessee W~ Parul~ Items             0.472 Lepidop~ Order     TRUE
 ```

@@ -16,11 +16,11 @@ dietSummary(
 \arguments{
 \item{commonName}{common name of bird species to summarize; case-insensitive.}
 
-\item{by}{taxonomic level of prey to summarize diet by; possibile values include Kingdom, Phylum, Class, Order, Family, Genus, or Species; defaults to Order.}
+\item{by}{taxonomic level of prey to summarize diet by; possibile values include 'Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus', or 'Species'; defaults to 'Order'.}
 
-\item{dietType}{the type of quantitative diet data; possible values include percent by Items, Wt_or_Vol (weight or volume), or percent Occurrence; defaults to Items.}
+\item{dietType}{the type of quantitative diet data; possible values include percent by 'Items', 'Wt_or_Vol' (weight or volume), or percent 'Occurrence'; defaults to 'Items'.}
 
-\item{season}{the season for which a diet summary should be conducted; possible values include spring, summer, fall, winter, or any; defaults to any.}
+\item{season}{the season for which a diet summary should be conducted; possible values include 'spring', 'summer', 'fall', 'winter', or 'any'; defaults to 'any'.}
 
 \item{region}{the region for which a diet summary should be conducted; typically these are US or Mexican state or Canadian province names.}
 

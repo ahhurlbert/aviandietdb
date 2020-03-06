@@ -9,7 +9,7 @@ speciesSummary(commonName, by = "Order")
 \arguments{
 \item{commonName}{common name of bird species to summarize; case-insensitive}
 
-\item{by}{taxonomic level of prey to summarize diet by; possibile values include Kingdom, Phylum, Class, Order, Family, Genus, or Species}
+\item{by}{taxonomic level of prey to summarize diet by; possibile values include 'Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus', or 'Species'}
 }
 \description{
 This function provides a summary of when, where, and what type of diet data are available for a given species, as well as an overall average importance of diet items

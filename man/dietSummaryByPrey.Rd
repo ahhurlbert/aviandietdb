@@ -11,7 +11,8 @@ dietSummaryByPrey(
   dietType = NULL,
   season = NULL,
   region = NULL,
-  yearRange = c(1700, 2100)
+  yearRange = c(1700, 2100),
+  speciesMean = FALSE
 )
 }
 \arguments{
@@ -21,13 +22,15 @@ dietSummaryByPrey(
 
 \item{larvaOnly}{if TRUE, only records in which the specified prey taxon was consumed as a larva are returned; if FALSE (default), records for any life stage are returned.}
 
-\item{dietType}{the way in which diet data were quantified; possible values include % by 'Items', 'Wt_or_Vol' (weight or volume), or 'Occurrence'; defaults to 'Items'.}
+\item{dietType}{the way in which diet data were quantified; possible values include percent by 'Items', 'Wt_or_Vol' (weight or volume), or 'Occurrence'; defaults to 'Items'.}
 
 \item{season}{the season for which a diet summary should be conducted; possible values include 'spring', 'summer', 'fall', 'winter', or 'any'; defaults to 'any'.}
 
 \item{region}{the region for which a diet summary should be conducted; typically these are US or Mexican state or Canadian province names; by default all regions will be included.}
 
 \item{yearRange}{a vector specifying the minimum and maximum years over which a diet summary should be conducted; by default all years will be included.}
+
+\item{speciesMean}{logical value indicating whether to average across all regions, years and seasons to yield a single diet value per bird species-Diet_Type combination; default is FALSE in which case all diet analyses in which the prey taxon appears will be listed separately.}
 }
 \description{
 This function provides a summary of quantitative diet data for a given prey type

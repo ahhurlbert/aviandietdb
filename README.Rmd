@@ -91,12 +91,20 @@ dietSummary("Black-throated Blue Warbler", by = "Order", season = "summer", diet
 ### dietSummaryByPrey()
 Finally, the `dietSummaryByPrey()` function provides a list of all bird species that consume a particular prey taxon in decreasing order of importance (and grouped by Diet_Type). In addition to providing the prey taxon name, you must also specify the taxonomic level of that name. Like the `dietSummary()` function you can filter results just to particular seasons, regions, years, or types of diet data.
 
-The one additional argument is `larvaOnly`, which if TRUE, only returns records in which the specified prey taxon was consumed in larval form. If FALSE, records for any life stage are returned. This is most relevant for Lepidoptera and a few other insect groups, where one wants to single out the importance of caterpillars or other larvae.
+There are two additional argument not present in `dietSummary()`. One is `larvaOnly`, which if TRUE, only returns records in which the specified prey taxon was consumed in larval form. If FALSE, records for any life stage are returned. This is most relevant for Lepidoptera and a few other insect groups, where one wants to single out the importance of caterpillars or other larvae.
 
+This returns a summary at the level of individual studies, in which a single bird species might be listed multiple times because analyses were carried out in different, seasons, regions, years, etc.
 ```{r}
 caterpillars = dietSummaryByPrey("Lepidoptera", preyLevel = "Order", dietType = "Items", larvaOnly = TRUE)
 
 head(caterpillars, 10)
+```
+
+By specifying `speciesMean = TRUE`, only a single value is returned for each bird species that is the average across all analyses meeting the season, region, and year criteria.
+```{r}
+caterpillarsMean = dietSummaryByPrey("Lepidoptera", preyLevel = "Order", dietType = "Items", larvaOnly = TRUE, speciesMean = TRUE)
+
+head(caterpillarsMean, 10)
 ```
 
 
