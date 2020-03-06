@@ -284,18 +284,26 @@ season, region, and year criteria.
 caterpillarsMean = dietSummaryByPrey("Lepidoptera", preyLevel = "Order", dietType = "Items", larvaOnly = TRUE, speciesMean = TRUE)
 
 head(caterpillarsMean, 10)
-#> # A tibble: 10 x 7
-#> # Groups:   Common_Name, Family, Diet_Type, PreyName, PreyLevel [10]
-#>    Common_Name  Family Diet_Type Fraction_Diet PreyName PreyLevel LarvaOnly
-#>    <chr>        <chr>  <chr>             <dbl> <chr>    <chr>     <lgl>    
-#>  1 Philadelphi~ Vireo~ Items             0.686 Lepidop~ Order     TRUE     
-#>  2 Oak Titmouse Parid~ Items             0.663 Lepidop~ Order     TRUE     
-#>  3 Black-throa~ Parul~ Items             0.59  Lepidop~ Order     TRUE     
-#>  4 Blackburnia~ Parul~ Items             0.573 Lepidop~ Order     TRUE     
-#>  5 Black-throa~ Parul~ Items             0.542 Lepidop~ Order     TRUE     
-#>  6 Cerulean Wa~ Parul~ Items             0.524 Lepidop~ Order     TRUE     
-#>  7 Rose-breast~ Cardi~ Items             0.492 Lepidop~ Order     TRUE     
-#>  8 Cape May Wa~ Parul~ Items             0.484 Lepidop~ Order     TRUE     
-#>  9 Blue-headed~ Vireo~ Items             0.478 Lepidop~ Order     TRUE     
-#> 10 Tennessee W~ Parul~ Items             0.472 Lepidop~ Order     TRUE
+#>                     Common_Name       Family Diet_Type Fraction_Diet
+#> 1            Philadelphia Vireo   Vireonidae     Items     0.6865000
+#> 2                  Oak Titmouse      Paridae     Items     0.6633333
+#> 3  Black-throated Green Warbler    Parulidae     Items     0.5900000
+#> 4          Blackburnian Warbler    Parulidae     Items     0.5732500
+#> 5   Black-throated Blue Warbler    Parulidae     Items     0.5415000
+#> 6              Cerulean Warbler    Parulidae     Items     0.5243750
+#> 7        Rose-breasted Grosbeak Cardinalidae     Items     0.4925000
+#> 8              Cape May Warbler    Parulidae     Items     0.4835000
+#> 9             Blue-headed Vireo   Vireonidae     Items     0.4784500
+#> 10            Tennessee Warbler    Parulidae     Items     0.4718333
+#>       PreyName PreyLevel LarvaOnly
+#> 1  Lepidoptera     Order      TRUE
+#> 2  Lepidoptera     Order      TRUE
+#> 3  Lepidoptera     Order      TRUE
+#> 4  Lepidoptera     Order      TRUE
+#> 5  Lepidoptera     Order      TRUE
+#> 6  Lepidoptera     Order      TRUE
+#> 7  Lepidoptera     Order      TRUE
+#> 8  Lepidoptera     Order      TRUE
+#> 9  Lepidoptera     Order      TRUE
+#> 10 Lepidoptera     Order      TRUE
 ```
