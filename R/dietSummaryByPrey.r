@@ -101,9 +101,11 @@ dietSummaryByPrey = function(preyName,
       summarize(Mean_Fraction_Diet = mean(Fraction_Diet, na.rm = TRUE)) %>%
       arrange(Diet_Type, desc(Mean_Fraction_Diet)) %>%
       select(Common_Name, Family, Diet_Type, Mean_Fraction_Diet, PreyName, PreyLevel, LarvaOnly) %>%
-      rename(Fraction_Diet = Mean_Fraction_Diet)
+      rename(Fraction_Diet = Mean_Fraction_Diet) %>%
+      data.frame()
   } else {
-    output = dietsub
+    output = dietsub %>%
+      data.frame()
   }
 
   return(output)
