@@ -13,6 +13,7 @@ knitr::opts_chunk$set(
 )
 
 library(dplyr)
+library(tidyr)
 library(aviandietdb)
 library(scales)
 
@@ -57,14 +58,45 @@ A summary of the total number of records by species, and the total number of spe
 dbSummary()
 ```
 
+## Diet_Type
+
+When examining these diet data it is important to understand the different possible ways that investigators may have quantified the importance of different diet items, because these different methods are not necessarily comparable with each other. This means any summaries will be specific to a particular 'Diet_Type'. In this database, the possible values are:
+
+* **Items** - the fraction of the diet based on the proportion of total diet items examined (e.g. 9 out of 12 prey items examined were ants);  
+* **Wt_or_Vol** - the fraction of the diet based on the proportional weight or volume of the prey taxa examined (e.g. ants made up 10% of the diet by mass);  
+* **Occurrence** - the proportion of bird specimens (e.g. stomachs, nests, fecal samples) that included at least one of the specified prey taxa (e.g. ants occurred in 90% of stomachs examined);  **NOTE:** this is the one measure that need not sum to 100% across diet items within a given analysis;   
+* **Unspecified** - in the event that it is unclear from the Methods section of the study which measure was being used, it is listed as "Unspecified" 
+
 ## Summary functions
 
 For now, we provide just three simple ways to summarize data from the Diet Database.
 
 ### speciesSummary()
-The `speciesSummary()` function provides a summary of what kinds of data are available for the specified bird species, as well as a quantitative summary at the taxonomic level specified. For example,
+The `speciesSummary()` function provides a summary of what kinds of data are available for the specified bird species, as well as a quantitative summary at the taxonomic level specified. In the example below, you can see (1) the list of all studies providing quantitative diet data, (2) the total number of diet records, (3) the distribution of those records seasonally, (4) the distribution of those records across years and states/provinces, (5) the distribution of records by the taxonomic level to which prey were identified, (6) the distribution of records by Diet_Type, (7) the total number of diet analyses conducted for each Diet_Type, and (8) a quantitative summary of the diet at the specified taxonomic level averaged across all available studies of a given Diet_Type.
 
 ```{r}
 speciesSummary("Sharp-shinned hawk", by = "Class")
 ```
+
+### dietSummary()
+The `dietSummary()` function only returns the quantitative diet summary, but is more flexible with respect to specifying a season, region, set of years, or Diet_Type of interest. 
+
+```{r}
+dietSummary("Bald Eagle", by = "Class", season = "winter", yearRange = c(1985, 2000), dietType = "Wt_or_Vol")
+
+dietSummary("Black-throated Blue Warbler", by = "Order", season = "summer", dietType = "Items")
+```
+
+
+### dietSummaryByPrey()
+Finally, the `dietSummaryByPrey()` function provides a list of all bird species that consume a particular prey taxon in decreasing order of importance (and grouped by Diet_Type). In addition to providing the prey taxon name, you must also specify the taxonomic level of that name. Like the `dietSummary()` function you can filter results just to particular seasons, regions, years, or types of diet data.
+
+The one additional argument is `larvaOnly`, which if TRUE, only returns records in which the specified prey taxon was consumed in larval form. If FALSE, records for any life stage are returned. This is most relevant for Lepidoptera and a few other insect groups, where one wants to single out the importance of caterpillars or other larvae.
+
+```{r}
+caterpillars = dietSummaryByPrey("Lepidoptera", preyLevel = "Order", dietType = "Items", larvaOnly = TRUE)
+
+head(caterpillars, 10)
+```
+
 
