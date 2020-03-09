@@ -3,7 +3,7 @@
 #' This function provides a summary of quantitative diet data for a given prey type
 #' @param preyName scientific name of prey item to summarize, which may be at any taxonomic level denoted by preyLevel
 #' @param preyLevel taxonomic level of prey; possibile values include 'Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus', or 'Species'
-#' @param larvaOnly if TRUE, only records in which the specified prey taxon was consumed as a larva are returned; if FALSE (default), records for any life stage are returned.
+#' @param preyStage defaults to 'any'; one can alternatively specify 'adult', 'larva', or 'pupa' to narrow summary results to those that match these specific life stages
 #' @param dietType the way in which diet data were quantified; possible values include percent by 'Items', 'Wt_or_Vol' (weight or volume), or 'Occurrence'; defaults to 'Items'.
 #' @param season the season for which a diet summary should be conducted; possible values include 'spring', 'summer', 'fall', 'winter', or 'any'; defaults to 'any'.
 #' @param region the region for which a diet summary should be conducted; typically these are US or Mexican state or Canadian province names; by default all regions will be included.
@@ -18,7 +18,7 @@
 
 dietSummaryByPrey = function(preyName,
                              preyLevel,
-                             larvaOnly = FALSE,
+                             preyStage = 'any',
                              dietType = NULL,
                              season = NULL,
                              region = NULL,
@@ -71,12 +71,20 @@ dietSummaryByPrey = function(preyName,
   }
 
 
-  # Note this is strict, and will not include records which list 'larva' in addition to other stages
-  # (e.g. ('pupa; larva' or 'adult; larva'))
-  if (larvaOnly) {
-    diet2 = filter(dietdb, Prey_Stage == 'larva')
-  } else {
+  if (!preyStage %in% c('any', 'larva', 'pupa', 'adult')) {
+    warning("Please specify one of the following prey life stages:\n   larva, pupa, adult, any")
+    return(NULL)
+  }
+
+
+  # Note this is inclusive, and will include records which list 'larva' in addition to other stages
+  # (e.g. ('pupa; larva' or 'adult; larva')). Absence of Prey_Stage field is assumed to indicate adult.
+  if (preyStage == 'any') {
     diet2 = dietdb
+  } else if (preyStage == 'adult') {
+    diet2 = filter(dietdb, grepl('adult', Prey_Stage) | Prey_Stage == "")
+  } else {
+    diet2 = filter(dietdb, grepl(preyStage, Prey_Stage))
   }
 
   dietsub = diet2 %>%
@@ -87,8 +95,10 @@ dietSummaryByPrey = function(preyName,
            tolower(Observation_Season) %in% season,
            Location_Region %in% region) %>%
     arrange(Diet_Type, desc(Fraction_Diet)) %>%
-    select(Common_Name, Family, Location_Region, Observation_Year_End, Observation_Season, Diet_Type, Fraction_Diet) %>%
-    mutate(PreyName = preyName, PreyLevel = preyLevel, LarvaOnly = larvaOnly)
+    mutate(Prey_Name = preyName, Prey_Level = preyLevel) %>%
+    select(Common_Name, Family, Location_Region, Observation_Year_End, Observation_Season,
+           Diet_Type, Fraction_Diet, Prey_Name, Prey_Level, Prey_Stage)
+
 
   if (nrow(dietsub) == 0) {
     warning("No records for the specified combination of prey, prey stage, diet type, season, region, and years.")
@@ -97,10 +107,14 @@ dietSummaryByPrey = function(preyName,
 
   if (speciesMean) {
     output = dietsub %>%
-      group_by(Common_Name, Family, Diet_Type, PreyName, PreyLevel, LarvaOnly) %>%
+      group_by(Common_Name, Family, Diet_Type, Prey_Name, Prey_Level) %>%
       summarize(Mean_Fraction_Diet = mean(Fraction_Diet, na.rm = TRUE)) %>%
       arrange(Diet_Type, desc(Mean_Fraction_Diet)) %>%
-      select(Common_Name, Family, Diet_Type, Mean_Fraction_Diet, PreyName, PreyLevel, LarvaOnly) %>%
+      mutate(Prey_Stage = case_when(
+        preyStage == 'any' ~ '',
+        preyStage != 'any' ~ preyStage
+      )) %>%
+      select(Common_Name, Family, Diet_Type, Mean_Fraction_Diet, Prey_Name, Prey_Level, Prey_Stage) %>%
       rename(Fraction_Diet = Mean_Fraction_Diet) %>%
       data.frame()
   } else {
