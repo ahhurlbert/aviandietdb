@@ -7,12 +7,13 @@
 dietSummaryByPrey(
   preyName,
   preyLevel,
-  larvaOnly = FALSE,
+  preyStage = "any",
   dietType = NULL,
   season = NULL,
   region = NULL,
   yearRange = c(1700, 2100),
-  speciesMean = FALSE
+  speciesMean = FALSE,
+  db = NULL
 )
 }
 \arguments{
@@ -20,9 +21,9 @@ dietSummaryByPrey(
 
 \item{preyLevel}{taxonomic level of prey; possibile values include 'Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus', or 'Species'}
 
-\item{larvaOnly}{if TRUE, only records in which the specified prey taxon was consumed as a larva are returned; if FALSE (default), records for any life stage are returned.}
+\item{preyStage}{defaults to 'any'; one can alternatively specify 'adult', 'larva', or 'pupa' to narrow summary results to those that match these specific life stages}
 
-\item{dietType}{the way in which diet data were quantified; possible values include percent by 'Items', 'Wt_or_Vol' (weight or volume), or 'Occurrence'; defaults to 'Items'.}
+\item{dietType}{the way in which diet data were quantified; possible values include percent by 'Items', 'Wt_or_Vol' (weight or volume), or 'Occurrence'; defaults to NULL, in which case summaries will be provided for each Diet_Type for which data exist.}
 
 \item{season}{the season for which a diet summary should be conducted; possible values include 'spring', 'summer', 'fall', 'winter', or 'any'; defaults to 'any'.}
 
@@ -31,6 +32,8 @@ dietSummaryByPrey(
 \item{yearRange}{a vector specifying the minimum and maximum years over which a diet summary should be conducted; by default all years will be included.}
 
 \item{speciesMean}{logical value indicating whether to average across all regions, years and seasons to yield a single diet value per bird species-Diet_Type combination; default is FALSE in which case all diet analyses in which the prey taxon appears will be listed separately.}
+
+\item{db}{used to specify an alternative Diet Database object, mainly for testing; the default results in the main 'dietdb' data object being used.}
 }
 \description{
 This function provides a summary of quantitative diet data for a given prey type

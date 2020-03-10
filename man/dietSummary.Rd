@@ -10,7 +10,8 @@ dietSummary(
   dietType = "Items",
   season = NULL,
   region = NULL,
-  yearRange = c(1700, 2100)
+  yearRange = c(1700, 2100),
+  db = NULL
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ dietSummary(
 \item{region}{the region for which a diet summary should be conducted; typically these are US or Mexican state or Canadian province names.}
 
 \item{yearRange}{a vector specifying the minimum and maximum years over which a diet summary should be conducted; by default all years will be included.}
+
+\item{db}{used to specify an alternative Diet Database object, mainly for testing; the default results in the main 'dietdb' data object being used.}
 }
 \description{
 This function provides a summary of quantitative diet data for a given bird species, taxonomic level of prey resolution, data type, season, region, and year range

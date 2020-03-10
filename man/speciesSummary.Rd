@@ -4,12 +4,14 @@
 \alias{speciesSummary}
 \title{Species diet summary function}
 \usage{
-speciesSummary(commonName, by = "Order")
+speciesSummary(commonName, by = "Order", db = NULL)
 }
 \arguments{
 \item{commonName}{common name of bird species to summarize; case-insensitive}
 
 \item{by}{taxonomic level of prey to summarize diet by; possibile values include 'Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus', or 'Species'}
+
+\item{db}{used to specify an alternative Diet Database object, mainly for testing; the default results in the main 'dietdb' data object being used.}
 }
 \description{
 This function provides a summary of when, where, and what type of diet data are available for a given species, as well as an overall average importance of diet items
