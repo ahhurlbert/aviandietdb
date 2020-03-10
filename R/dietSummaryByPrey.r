@@ -105,7 +105,8 @@ dietSummaryByPrey = function(preyName,
            Observation_Year_End >= min(yearRange),
            Observation_Year_End <= max(yearRange),
            tolower(Observation_Season) %in% season,
-           Location_Region %in% region)
+           Location_Region %in% region,
+           Diet_Type %in% dietType)
 
   if (nrow(dietsub) == 0) {
     warning("No records for the specified combination of prey, prey stage, diet type, season, region, and years.")
@@ -129,7 +130,7 @@ dietSummaryByPrey = function(preyName,
 
   # Equal-weighted mean fraction of diet (all studies weighted equally despite
   #  variation in sample size) for Items, Wt_or_Vol, and Unspecified Diet_Type
-  if (length(dietType[dietType != 'Occurrence']) > 0 & nrow(dietsub[dietsub$Diet_Type != "Occurrence"]) > 0) {
+  if (length(dietType[dietType != 'Occurrence']) > 0 & nrow(dietsub[dietsub$Diet_Type != "Occurrence",]) > 0) {
 
     preySummary_nonOccurrence = dietsub %>%
 
