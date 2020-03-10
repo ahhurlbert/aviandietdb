@@ -9,7 +9,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  tidy.opts=list(width.cutoff=70)
 )
 
 library(dplyr)
@@ -89,22 +90,29 @@ dietSummary("Black-throated Blue Warbler", by = "Order", season = "summer", diet
 
 
 ### dietSummaryByPrey()
-Finally, the `dietSummaryByPrey()` function provides a list of all bird species that consume a particular prey taxon in decreasing order of importance (and grouped by Diet_Type). In addition to providing the prey taxon name, you must also specify the taxonomic level of that name. Like the `dietSummary()` function you can filter results just to particular seasons, regions, years, or types of diet data.
+Finally, the `dietSummaryByPrey()` function provides a list of all bird species that consume a particular prey taxon in decreasing order of importance. In addition to providing the prey taxon name, you must also specify the taxonomic level of that name. Like the `dietSummary()` function you can filter results just to particular seasons, regions, years, or types of diet data.
 
-There are two additional argument not present in `dietSummary()`. One is `larvaOnly`, which if TRUE, only returns records in which the specified prey taxon was consumed in larval form. If FALSE, records for any life stage are returned. This is most relevant for Lepidoptera and a few other insect groups, where one wants to single out the importance of caterpillars or other larvae.
+There are two additional argument not present in `dietSummary()`. One is `preyStage`, which specifies the life stage of the prey item (if applicable) for which a summary should be conducted. By default ('any'), diet records will be included regardless of prey stage. Alternatively, one can specify that the summary should only be conducted for records including the terms 'larva', 'adult', or 'pupa' in the Diet Database's 'Prey_Stage' field. This is most relevant for Lepidoptera and a few other insect groups, where one might want to single out the importance of caterpillars or other larvae, for example.
 
 This returns a summary at the level of individual studies, in which a single bird species might be listed multiple times because analyses were carried out in different, seasons, regions, years, etc.
 ```{r}
-caterpillars = dietSummaryByPrey("Lepidoptera", preyLevel = "Order", dietType = "Items", larvaOnly = TRUE)
+caterpillars = dietSummaryByPrey("Lepidoptera", preyLevel = "Order", dietType = "Items", preyStage = "larva")
 
 head(caterpillars, 10)
 ```
 
 By specifying `speciesMean = TRUE`, only a single value is returned for each bird species that is the average across all analyses meeting the season, region, and year criteria.
 ```{r}
-caterpillarsMean = dietSummaryByPrey("Lepidoptera", preyLevel = "Order", dietType = "Items", larvaOnly = TRUE, speciesMean = TRUE)
+caterpillarsMean = dietSummaryByPrey("Lepidoptera", preyLevel = "Order", dietType = "Items", 
+                                     preyStage = "larva", speciesMean = TRUE)
 
 head(caterpillarsMean, 10)
 ```
 
 
+## Final thoughts
+1. If you have any suggestions on the package please feel free to post an [issue](https://github.com/ahhurlbert/aviandietdb/issues).  
+
+2. We will be submitting the Avian Diet Database as a formal publication with a DOI soon, but if you would like to cite it, for the moment use:  Hurlbert, AH, AM Olsen, P Winner. 2020. Avian Diet Database. https://github.com/ahhurlbert/aviandietdb
+
+3. If you are aware of a quantitative study on avian diets that is NOT in the database (especially for North American species), please [post an issue in the Avian Diet Database development repo](https://github.com/hurlbertlab/dietdatabase/issues) with "study with diet data -- [Author Year]" as the subject line.  
