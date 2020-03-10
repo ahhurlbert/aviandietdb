@@ -163,7 +163,7 @@ dietSummaryByPrey = function(preyName,
   # a given taxonomic level, at least X% of samples included that prey type
   # based on the maximum % occurrence of prey within that taxonomic group.
 
-  if ("Occurrence" %in% dietType & nrow(dietsub[dietsub$Diet_Type == "Occurrence"]) > 0) {
+  if ("Occurrence" %in% dietType & nrow(dietsub[dietsub$Diet_Type == "Occurrence", ]) > 0) {
 
     preySummary_Occurrence = dietsub %>%
 
