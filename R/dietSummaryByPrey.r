@@ -94,10 +94,15 @@ dietSummaryByPrey = function(preyName,
            Diet_Type %in% dietType,
            tolower(Observation_Season) %in% season,
            Location_Region %in% region) %>%
-    arrange(Diet_Type, desc(Fraction_Diet)) %>%
+
+    group_by(Common_Name, Family, Source, Observation_Year_End, Observation_Month_Begin, Observation_Season,
+             Bird_Sample_Size, Habitat_type, Location_Region, Location_Specific, Item_Sample_Size, Prey_Stage) %>%
+
+    summarize(Sum_Diet = sum(Fraction_Diet, na.rm = T)) %>%
+    arrange(desc(Sum_Diet)) %>%
     mutate(Prey_Name = preyName, Prey_Level = preyLevel) %>%
     select(Common_Name, Family, Location_Region, Observation_Year_End, Observation_Season,
-           Diet_Type, Fraction_Diet, Prey_Name, Prey_Level, Prey_Stage)
+           Sum_Diet, Prey_Name, Prey_Level, Prey_Stage)
 
 
   if (nrow(dietsub) == 0) {
