@@ -18,3 +18,5 @@ Imports:
     dplyr,
     stringr,
     tidyr
+Suggests: 
+    testthat

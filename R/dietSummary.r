@@ -7,6 +7,7 @@
 #' @param season the season for which a diet summary should be conducted; possible values include 'spring', 'summer', 'fall', 'winter', or 'any'; defaults to 'any'.
 #' @param region the region for which a diet summary should be conducted; typically these are US or Mexican state or Canadian province names.
 #' @param yearRange a vector specifying the minimum and maximum years over which a diet summary should be conducted; by default all years will be included.
+#' @param db used to specify an alternative Diet Database object, mainly for testing; the default results in the main 'dietdb' data object being used.
 #' @keywords diet summary
 #' @export
 #' @examples
@@ -19,9 +20,18 @@ dietSummary = function(commonName,
                        dietType = 'Items',
                        season = NULL,
                        region = NULL,
-                       yearRange = c(1700, 2100)) {
+                       yearRange = c(1700, 2100),
+                       db = NULL) {
 
   require(dplyr)
+
+  # Load dietdb unless otherwise specified
+
+  if (!is.null(db)) {
+    dietdb = db
+  } else {
+    data(dietdb)
+  }
 
   # Checking for valid arguments
   if (!tolower(commonName) %in% tolower(dietdb$Common_Name)) {

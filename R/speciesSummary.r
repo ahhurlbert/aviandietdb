@@ -3,15 +3,26 @@
 #' This function provides a summary of when, where, and what type of diet data are available for a given species, as well as an overall average importance of diet items
 #' @param commonName common name of bird species to summarize; case-insensitive
 #' @param by taxonomic level of prey to summarize diet by; possibile values include 'Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus', or 'Species'
+#' @param db used to specify an alternative Diet Database object, mainly for testing; the default results in the main 'dietdb' data object being used.
 #' @keywords summary
 #' @export
 #' @examples
 #' speciesSummary("Bald eagle", by = "Class")
 
-speciesSummary = function(commonName, by = 'Order') {
+speciesSummary = function(commonName,
+                          by = 'Order',
+                          db = NULL) {
 
   require(dplyr)
   require(tidyr)
+
+  # Load dietdb unless otherwise specified
+
+  if (!is.null(db)) {
+    dietdb = db
+  } else {
+    data(dietdb)
+  }
 
   if (!tolower(commonName) %in% tolower(dietdb$Common_Name)) {
     warning("No species with that name in the Diet Database.")
