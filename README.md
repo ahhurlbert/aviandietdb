@@ -9,7 +9,7 @@ aviandietdb
 
 The archived database currently includes **56,008** diet records for **600** bird species. This is a growing database, and while it is currently North American biased, we hope to continue adding avian diet data from around the world.
 
-You can find the development version of the database [here](https://github.com/hurlbertlab/dietdatabase).
+You can find the development version of the database (which may include more recent records than what is available in the R package but which may still require data cleaning) [here](https://github.com/hurlbertlab/dietdatabase/blob/master/AvianDietDatabase.txt).
 
 This R package provides a few simple functions for summarizing and querying the database.
 
