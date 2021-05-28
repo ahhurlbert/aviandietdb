@@ -45,6 +45,7 @@ speciesSummary = function(commonName,
     spread(Year, value = n)
   recordsPerType = data.frame(count(dietsp, Diet_Type))
   dietsp$Observation_Season[is.na(dietsp$Observation_Season)] = 'unspecified'
+  dietsp$Observation_Season = tolower(dietsp$Observation_Season)
   recordsPerSeason = data.frame(count(dietsp, Observation_Season))
 
 
@@ -76,6 +77,10 @@ speciesSummary = function(commonName,
                          !(!is.na(dietsp$Prey_Family) & dietsp$Prey_Family != "") &
                          !(!is.na(dietsp$Prey_Genus) & dietsp$Prey_Genus != "") &
                          !(!is.na(dietsp$Prey_Scientific_Name) & dietsp$Prey_Scientific_Name != ""), ])
+  subo_n = nrow(dietsp[!is.na(dietsp$Prey_Suborder) & dietsp$Prey_Suborder != "" &
+                         !(!is.na(dietsp$Prey_Family) & dietsp$Prey_Family != "") &
+                         !(!is.na(dietsp$Prey_Genus) & dietsp$Prey_Genus != "") &
+                         !(!is.na(dietsp$Prey_Scientific_Name) & dietsp$Prey_Scientific_Name != ""), ])
   fami_n = nrow(dietsp[!is.na(dietsp$Prey_Family) & dietsp$Prey_Family != "" &
                          !(!is.na(dietsp$Prey_Genus) & dietsp$Prey_Genus != "") &
                          !(!is.na(dietsp$Prey_Scientific_Name) & dietsp$Prey_Scientific_Name != ""), ])
@@ -83,8 +88,8 @@ speciesSummary = function(commonName,
                          !(!is.na(dietsp$Prey_Scientific_Name) & dietsp$Prey_Scientific_Name != ""), ])
   spec_n = nrow(dietsp[!is.na(dietsp$Prey_Scientific_Name) & dietsp$Prey_Scientific_Name != "", ])
 
-  recordsPerPreyIDLevel = data.frame(level = c('Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus', 'Species'),
-                                     n = c(king_n, phyl_n, clas_n, orde_n, fami_n, genu_n, spec_n))
+  recordsPerPreyIDLevel = data.frame(level = c('Kingdom', 'Phylum', 'Class', 'Order', 'Suborder', 'Family', 'Genus', 'Species'),
+                                     n = c(king_n, phyl_n, clas_n, orde_n, subo_n, fami_n, genu_n, spec_n))
 
 
 
