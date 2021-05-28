@@ -34,7 +34,7 @@ dbSummary = function() {
     select(Order, Family, SpeciesWithData, PercentComplete) %>%
     arrange(Order) %>%
     as_tibble()
-  warning("This is a summary of the database version loaded with the R package.\nNote that this database continues to grow.\nFor the most up-to-date version, see 'https://github.com/hurlbertlab/dietdatabase/blob/master/AvianDietDatabase.txt'.")
+  warning("This is a summary of the most recent database version released on Zenodo (https://doi.org/10.5281/zenodo.4585370).\nA development version which may include more recent entries, but which may not yet be fully vetted, is available at 'https://github.com/hurlbertlab/dietdatabase/blob/master/AvianDietDatabase.txt'.")
   return(list(numRecords=numRecords,
               numSpecies=numSpecies,
               numStudies=numStudies,
