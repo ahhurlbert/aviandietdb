@@ -28,6 +28,7 @@ dietSummaryByPrey = function(preyName,
                              db = NULL) {
 
   require(dplyr)
+  options(dplyr.summarise.inform = FALSE)
 
   # Load dietdb unless otherwise specified
 

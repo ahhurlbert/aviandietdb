@@ -10,6 +10,7 @@
 dbSummary = function() {
 
   require(dplyr)
+  options(dplyr.summarise.inform = FALSE)
 
   orders = unique(NA_specieslist[, c('order', 'family')]) %>%
     rename(Order = order, Family = family)
