@@ -125,12 +125,43 @@ speciesSummary = function(commonName,
     distinct() %>%
     count(Diet_Type)
 
+  # Figure out the unique set of prey parts for each individual prey Taxon
+  preyParts = unique(dietsp[, c('Taxon', 'Prey_Part')])
+  preyParts$Prey_Part[is.na(preyParts$Prey_Part) | preyParts$Prey_Part == ""] = 'NA'
+  preyPartsByTaxon = data.frame(sapply(unique(preyParts$Taxon),
+                                       function(x) {
+                                         # collapse all Prey_Part values for a given Taxon, split them into components,
+                                         # remove the redundant components, and then provide a sorted list of unique elements
+                                         collapseRows = paste(preyParts$Prey_Part[preyParts$Taxon == x], collapse = ";") %>%
+                                           strsplit(";") %>%
+                                           unlist() %>%
+                                           unique() %>%
+                                           sort()
+
+                                         # Remove NA if there are other non-NA entries as well (keep if it's the only entry)
+                                         if(length(collapseRows) > 1) {
+
+                                           preyPartSummary = collapseRows[collapseRows != "NA"]
+                                         } else {
+                                           preyPartSummary = collapseRows
+                                         }
+
+                                         collapsedPreyPartSummary = paste(preyPartSummary, collapse = "; ")
+
+                                         return(collapsedPreyPartSummary)
+                                       }
+  ))
+  names(preyPartsByTaxon) = 'Prey_Part'
+  preyPartsByTaxon$Taxon = row.names(preyPartsByTaxon)
+
+
+
   # Equal-weighted mean fraction of diet (all studies weighted equally despite
   #  variation in sample size)
   nonOccurrence = dietsp %>% filter(Diet_Type != "Occurrence")
 
   if (nrow(nonOccurrence) > 0) {
-    preySummary_nonOccurrence = nonOccurrence %>%
+    preySummary_nonOccurrence_withoutPreyPart = nonOccurrence %>%
 
       group_by(Source, Observation_Year_Begin, Observation_Month_Begin, Observation_Season, Analysis_Number,
                Bird_Sample_Size, Habitat_type, Location_Region, Item_Sample_Size, Taxon, Diet_Type) %>%
@@ -143,9 +174,17 @@ speciesSummary = function(commonName,
       select(Diet_Type, Taxon, Frac_Diet) %>%
       arrange(Diet_Type, desc(Frac_Diet)) %>%
       data.frame()
+
+    preySummary_nonOccurrence = left_join(preySummary_nonOccurrence_withoutPreyPart, preyPartsByTaxon, by = 'Taxon') %>%
+      select(Diet_Type, Taxon, Prey_Part, Frac_Diet)
+
   } else {
-    preySummary_nonOccurrence = data.frame(Diet_Type = NULL, Frac_Diet = NULL)
+    preySummary_nonOccurrence = data.frame(Diet_Type = NULL, Taxon = NULL, Prey_Part = NULL, Frac_Diet = NULL)
   }
+
+
+
+
 
   # Fraction Occurrence values don't sum to 1, so all we can do is say that at
   # a given taxonomic level, at least X% of samples included that prey type
@@ -154,7 +193,7 @@ speciesSummary = function(commonName,
   Occurrence = dietsp %>% filter(Diet_Type == "Occurrence")
 
   if (nrow(Occurrence) > 0) {
-    preySummary_Occurrence = Occurrence %>%
+    preySummary_Occurrence_withoutPreyPart = Occurrence %>%
 
       group_by(Source, Observation_Year_Begin, Observation_Month_Begin, Observation_Season, Analysis_Number,
                Bird_Sample_Size, Habitat_type, Location_Region, Item_Sample_Size, Taxon, Diet_Type) %>%
@@ -167,8 +206,12 @@ speciesSummary = function(commonName,
       select(Diet_Type, Taxon, Frac_Diet) %>%
       arrange(Diet_Type, desc(Frac_Diet)) %>%
       data.frame()
+
+    preySummary_Occurrence = left_join(preySummary_Occurrence_withoutPreyPart, preyPartsByTaxon, by = 'Taxon') %>%
+      select(Diet_Type, Taxon, Prey_Part, Frac_Diet)
+
   } else {
-    preySummary_Occurrence = data.frame(Diet_Type = NULL, Frac_Diet = NULL)
+    preySummary_Occurrence = data.frame(Diet_Type = NULL, Taxon = NULL, Prey_Part = NULL, Frac_Diet = NULL)
   }
 
 
@@ -179,7 +222,7 @@ speciesSummary = function(commonName,
   allCols = data.frame(col = c('Items', 'Wt_or_Vol', 'Unspecified', 'Occurrence'), order = 1:4)
   allCols$col = as.character(allCols$col)
 
-  cols = data.frame(col = names(preySummary)[2:ncol(preySummary)])
+  cols = data.frame(col = names(preySummary)[3:ncol(preySummary)])
   cols$col = as.character(cols$col)
 
   colOrdered = cols %>%
@@ -187,8 +230,8 @@ speciesSummary = function(commonName,
     arrange(order) %>%
     select(col)
 
-  preySummary2 = preySummary[, c('Taxon', colOrdered[,1])]
-  preySummary2 = preySummary2[order(preySummary2[[2]], decreasing = TRUE), ]
+  preySummary2 = preySummary[, c('Taxon', 'Prey_Part', colOrdered[,1])]
+  preySummary2 = preySummary2[order(preySummary2[[3]], decreasing = TRUE), ]
 
   return(list(Studies = Studies,
               numRecords = numRecords,

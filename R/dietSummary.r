@@ -112,6 +112,39 @@ dietSummary = function(commonName,
     dietsp$Taxon = dietsp[, taxonLevel]
   }
 
+
+  # Figure out the unique set of prey parts for each individual prey Taxon
+  preyParts = unique(dietsp[, c('Taxon', 'Prey_Part')])
+  preyParts$Prey_Part[is.na(preyParts$Prey_Part) | preyParts$Prey_Part == ""] = 'NA'
+  preyPartsByTaxon = data.frame(sapply(unique(preyParts$Taxon),
+                                       function(x) {
+                                         # collapse all Prey_Part values for a given Taxon, split them into components,
+                                         # remove the redundant components, and then provide a sorted list of unique elements
+                                         collapseRows = paste(preyParts$Prey_Part[preyParts$Taxon == x], collapse = ";") %>%
+                                           strsplit(";") %>%
+                                           unlist() %>%
+                                           unique() %>%
+                                           sort()
+
+                                         # Remove NA if there are other non-NA entries as well (keep if it's the only entry)
+                                         if(length(collapseRows) > 1) {
+
+                                           preyPartSummary = collapseRows[collapseRows != "NA"]
+                                         } else {
+                                           preyPartSummary = collapseRows
+                                         }
+
+                                         collapsedPreyPartSummary = paste(preyPartSummary, collapse = "; ")
+
+                                         return(collapsedPreyPartSummary)
+                                       }
+  ))
+  names(preyPartsByTaxon) = 'Prey_Part'
+  preyPartsByTaxon$Taxon = row.names(preyPartsByTaxon)
+
+
+
+
   # Equal-weighted mean fraction of diet (all studies weighted equally despite
   #  variation in sample size)
 
@@ -154,5 +187,9 @@ dietSummary = function(commonName,
       data.frame()
   }
 
-  return(preySummary)
+  preySummary2 = left_join(preySummary, preyPartsByTaxon, by = 'Taxon') %>%
+    select(Taxon, Prey_Part, Frac_Diet)
+
+
+  return(preySummary2)
 }
