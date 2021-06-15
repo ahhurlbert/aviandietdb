@@ -31,8 +31,9 @@ dbSummary = function() {
   spCountByFamily2$SpeciesWithData[is.na(spCountByFamily2$SpeciesWithData)] = 0
   spCountByFamily3 = spCountByFamily2 %>%
     inner_join(orders, by = 'Family') %>%
-    mutate(PercentComplete = round(100*SpeciesWithData/(SpeciesWithData + WithoutData))) %>%
-    select(Order, Family, SpeciesWithData, PercentComplete) %>%
+    mutate(TotalSpeciesABA = SpeciesWithData + WithoutData,
+           PercentComplete = round(100*SpeciesWithData/(SpeciesWithData + WithoutData))) %>%
+    select(Order, Family, SpeciesWithData, TotalSpeciesABA, PercentComplete) %>%
     arrange(Order) %>%
     as_tibble()
   warning("This is a summary of the most recent database version released on Zenodo (https://doi.org/10.5281/zenodo.4585370).\nA development version which may include more recent entries, but which may not yet be fully vetted, is available at 'https://github.com/hurlbertlab/dietdatabase/blob/master/AvianDietDatabase.txt'.")
