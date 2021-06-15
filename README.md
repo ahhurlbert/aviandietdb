@@ -7,7 +7,7 @@ aviandietdb
 <!-- badges: end -->
 **aviandietdb** provides access to the Avian Diet Database, which contains quantitative diet data for bird species as well as contextual information about where and when those data were collected.
 
-The archived database currently includes **68,232** diet records for **661** bird species. This is a growing database, and while it is currently North American biased, we hope to continue adding avian diet data from around the world.
+The archived database currently includes **68,258** diet records for **664** bird species. This is a growing database, and while it is currently North American biased, we hope to continue adding avian diet data from around the world.
 
 You can find the development version of the database (which may include more recent records than what is available in the R package but which may still require data cleaning) [here](https://github.com/hurlbertlab/dietdatabase/blob/master/AvianDietDatabase.txt).
 
@@ -41,13 +41,13 @@ A summary of the total number of records by species, and the total number of spe
 ``` r
 dbSummary()
 #> $numRecords
-#> [1] 68632
+#> [1] 68258
 #> 
 #> $numSpecies
-#> [1] 661
+#> [1] 664
 #> 
 #> $numStudies
-#> [1] 896
+#> [1] 898
 #> 
 #> $recordsPerSpecies
 #> # A tibble: 600 x 3
