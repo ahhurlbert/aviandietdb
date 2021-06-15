@@ -99,65 +99,134 @@ For now, we provide just three simple ways to summarize data from the Diet Datab
 
 ### speciesSummary()
 
-The `speciesSummary()` function provides a summary of what kinds of data are available for the specified bird species, as well as a quantitative summary at the taxonomic level specified. In the example below, you can see (1) the list of all studies providing quantitative diet data, (2) the total number of diet records, (3) the distribution of those records seasonally, (4) the distribution of those records across years and states/provinces, (5) the distribution of records by the taxonomic level to which prey were identified, (6) the distribution of records by Diet\_Type, (7) the total number of diet analyses conducted for each Diet\_Type, and (8) a quantitative summary of the diet at the specified taxonomic level averaged across all available studies of a given Diet\_Type.
+The `speciesSummary()` function provides a summary of what kinds of data are available for the specified bird species, as well as a quantitative summary at the taxonomic level specified. In the example below, you can see (1) the list of all studies providing quantitative diet data, (2) the total number of diet records, (3) the distribution of those records seasonally, (4) the distribution of those records across years and states/provinces, (5) the distribution of records by the taxonomic level to which prey were identified, (6) the distribution of records by Diet\_Type, (7) the total number of diet analyses conducted for each Diet\_Type, and (8) a quantitative summary of the diet at the specified taxonomic level averaged across all available studies of a given Diet\_Type. If the original data source indicated that specific parts of the prey taxon was consumed (e.g. fruit, seed, vegetation, etc.) then they are listed in the Prey_Part field. 
 
 ``` r
-speciesSummary("Sharp-shinned hawk", by = "Class")
-#> $Studies
-#> [1] "Joy, S. M., R. T. Reynolds, R. L. Knight, and R. W. Hoffman. 1994. Feeding ecology of Sharp-shinned Hawks nesting in deciduous and coniferous forests in Colorado. Condor 96:455-467."
-#> [2] "Quinn, M. S. 1991. Nest site and prey of a pair of Sharp-shinned Hawks in Alberta. Journal of Raptor Research 25:18-19."                                                              
-#> [3] "Reynolds, R. T. and E. C. Meslow. 1984. Partitioning of food and niche characteristics of coexisting Accipiter during breeding. Auk 101:761-777."                                     
-#> [4] "Snyder, N. F. R. and J. W. Wiley. 1976. Sexual size dimorphism in hawks and owls of North America. Ornithological Monographs 20."                                                     
-#> [5] "Storer, R. W. 1966. Sexual dimorphism and food habits of three North American accipiters. Auk 83:423-436."                                                                            
-#> [6] "Toland, B. 1986. Hunting success of some Missouri raptors. Wilson Bulletin 98:116-125."                                                                                               
-#> [7] "Mitchell, R. T. 1952. Consumption of Spruce Budworms by Birds in a Maine Spruce-Fir Forest. Journal of Forestry 50(5):387-389. "                                                      
-#> 
-#> $numRecords
-#> [1] 206
-#> 
-#> $recordsPerSeason
-#>   Observation_Season   n
-#> 1           multiple   2
-#> 2             summer   9
-#> 3        unspecified 195
-#> 
-#> $recordsPerYearRegion
-#>   Location_Region 1950 1966 1974 1976 1985 1987 1989
-#> 1         Alberta   NA   NA   NA   NA   NA    8   NA
-#> 2        Colorado   NA   NA   NA   NA   NA   NA  105
-#> 3           Maine    1   NA   NA   NA   NA   NA   NA
-#> 4        Missouri   NA   NA   NA   NA    2   NA   NA
-#> 5   North America   NA   19   NA    4   NA   NA   NA
-#> 6          Oregon   NA   NA   67   NA   NA   NA   NA
-#> 
-#> $recordsPerPreyIDLevel
-#>     level   n
-#> 1 Kingdom   3
-#> 2  Phylum   2
-#> 3   Class   6
-#> 4   Order   0
-#> 5  Family   8
-#> 6   Genus  41
-#> 7 Species 146
-#> 
-#> $recordsPerType
-#>   Diet_Type   n
-#> 1     Items 186
-#> 2 Wt_or_Vol  20
-#> 
-#> $analysesPerDietType
-#>   Diet_Type n
-#> 1     Items 6
-#> 2 Wt_or_Vol 2
-#> 
-#> $preySummary
-#>            Taxon  Items Wt_or_Vol
-#> 1           Aves 0.8975    0.3571
-#> 4 Unid. Animalia 0.0626    0.1194
-#> 2       Mammalia 0.0373    0.0234
-#> 3       Reptilia 0.0014        NA
-#> 5 Unid. Chordata 0.0010    0.5000
-```
+> speciesSummary("Tundra swan", by = "Class")
+$Studies
+[1] "Owen, M. and C.J. Cadbury. 1975. The ecology and mortality of swans at the Ouse Washes, England. Wildfowl 26:31-42."            
+[2] "Stewart, R.E. and J.H. Manning. 1958. Distribution and ecology of Whistling Swans in the Chesapeake Bay region. Auk 75:203-212."
+[3] "Earnst, S.L. 1992. Behavior and ecology of Tundra Swans during summer, autumn, and winter. Ph.D. Thesis. Ohio State University."
+
+$numRecords
+[1] 54
+
+$recordsPerSeason
+  Observation_Season  n
+1                     5
+2           multiple 11
+3             winter 38
+
+$recordsPerYearRegion
+  Location_Region 1956 1975 1992
+1          Alaska   NA   NA    5
+2         England   NA   38   NA
+3   United States   11   NA   NA
+
+$recordsPerPreyIDLevel
+     level  n
+1  Kingdom  0
+2   Phylum  5
+3    Class  0
+4    Order  1
+5 Suborder  0
+6   Family  0
+7    Genus 11
+8  Species 37
+
+$recordsPerType
+   Diet_Type  n
+1      Items  5
+2 Occurrence 38
+3  Wt_or_Vol 11
+
+$analysesPerDietType
+   Diet_Type n
+1      Items 1
+2 Occurrence 1
+3  Wt_or_Vol 1
+
+$preySummary
+               Taxon              Prey_Part Items Wt_or_Vol Occurrence
+4      Magnoliopsida root; seed; vegetation 0.599    0.8597     0.0990
+3       Cyanophyceae                     NA 0.232        NA         NA
+8 Unid. Tracheophyta             vegetation 0.156        NA     0.0495
+6   Unid. Arthropoda                     NA 0.013        NA         NA
+1           Bivalvia                     NA    NA    0.1064         NA
+2       Charophyceae                   gall    NA    0.0338         NA
+5     Polypodiopsida             vegetation    NA        NA     0.0099
+7  Unid. Chlorophyta             vegetation    NA        NA     0.0198
+
+> speciesSummary("Tundra swan", by = "Family")
+$Studies
+[1] "Owen, M. and C.J. Cadbury. 1975. The ecology and mortality of swans at the Ouse Washes, England. Wildfowl 26:31-42."            
+[2] "Stewart, R.E. and J.H. Manning. 1958. Distribution and ecology of Whistling Swans in the Chesapeake Bay region. Auk 75:203-212."
+[3] "Earnst, S.L. 1992. Behavior and ecology of Tundra Swans during summer, autumn, and winter. Ph.D. Thesis. Ohio State University."
+
+$numRecords
+[1] 54
+
+$recordsPerSeason
+  Observation_Season  n
+1                     5
+2           multiple 11
+3             winter 38
+
+$recordsPerYearRegion
+  Location_Region 1956 1975 1992
+1          Alaska   NA   NA    5
+2         England   NA   38   NA
+3   United States   11   NA   NA
+
+$recordsPerPreyIDLevel
+     level  n
+1  Kingdom  0
+2   Phylum  5
+3    Class  0
+4    Order  1
+5 Suborder  0
+6   Family  0
+7    Genus 11
+8  Species 37
+
+$recordsPerType
+   Diet_Type  n
+1      Items  5
+2 Occurrence 38
+3  Wt_or_Vol 11
+
+$analysesPerDietType
+   Diet_Type n
+1      Items 1
+2 Occurrence 1
+3  Wt_or_Vol 1
+
+$preySummary
+                Taxon              Prey_Part Items Wt_or_Vol Occurrence
+5          Cyperaceae root; seed; vegetation 0.379    0.0819     0.0297
+10        Nostocaceae                     NA 0.232        NA         NA
+14   Potamogetonaceae             vegetation 0.220    0.0378     0.0099
+24 Unid. Tracheophyta             vegetation 0.156        NA     0.0495
+21   Unid. Arthropoda                     NA 0.013        NA         NA
+1          Asteraceae                   root    NA        NA     0.0099
+2        Boraginaceae             vegetation    NA        NA     0.0099
+3        Brassicaceae                   root    NA        NA     0.0396
+4           Characeae                   gall    NA    0.0338         NA
+6        Equisetaceae             vegetation    NA        NA     0.0099
+7            Fabaceae       seed; vegetation    NA        NA     0.0297
+8    Hydrocharitaceae             vegetation    NA    0.3378         NA
+9              Myidae                     NA    NA    0.0276         NA
+11     Plantaginaceae       root; vegetation    NA        NA     0.0099
+12            Poaceae       seed; vegetation    NA    0.0276     0.0990
+13       Polygonaceae                   seed    NA        NA     0.0297
+15      Ranunculaceae       root; vegetation    NA        NA     0.0198
+16           Rosaceae             vegetation    NA        NA     0.0099
+17         Ruppiaceae             vegetation    NA    0.3306         NA
+18         Salicaceae             vegetation    NA        NA     0.0099
+19         Solanaceae                   root    NA        NA     0.0297
+20         Tellinidae                     NA    NA    0.0788         NA
+22  Unid. Chlorophyta             vegetation    NA        NA     0.0198
+23       Unid. Poales                   root    NA    0.0440         NA```
 
 ### dietSummary()
 
@@ -165,20 +234,20 @@ The `dietSummary()` function only returns the quantitative diet summary, but is 
 
 ``` r
 dietSummary("Bald Eagle", by = "Class", season = "winter", yearRange = c(1985, 2000), dietType = "Wt_or_Vol")
-#>       Taxon Frac_Diet
-#> 1      Aves    0.5710
-#> 2 Teleostei    0.3137
-#> 3  Mammalia    0.1157
+      Taxon Prey_Part Frac_Diet
+1      Aves        NA    0.5710
+2 Teleostei        NA    0.3137
+3  Mammalia        NA    0.1157
 
 dietSummary("Black-throated Blue Warbler", by = "Order", season = "summer", dietType = "Items")
-#>               Taxon Frac_Diet
-#> 1 Lepidoptera larva    0.5415
-#> 2        Coleoptera    0.2500
-#> 3           Diptera    0.0690
-#> 4       Lepidoptera    0.0690
-#> 5         Hemiptera    0.0260
-#> 6       Hymenoptera    0.0260
-#> 7           Araneae    0.0185
+              Taxon Prey_Part Frac_Diet
+1 Lepidoptera larva        NA    0.5415
+2        Coleoptera        NA    0.2500
+3           Diptera        NA    0.0690
+4       Lepidoptera        NA    0.0690
+5         Hemiptera        NA    0.0260
+6       Hymenoptera        NA    0.0260
+7           Araneae        NA    0.0185
 ```
 
 ### dietSummaryByPrey()
