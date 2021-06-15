@@ -7,7 +7,7 @@ aviandietdb
 <!-- badges: end -->
 **aviandietdb** provides access to the Avian Diet Database, which contains quantitative diet data for bird species as well as contextual information about where and when those data were collected.
 
-The archived database currently includes **56,008** diet records for **600** bird species. This is a growing database, and while it is currently North American biased, we hope to continue adding avian diet data from around the world.
+The archived database currently includes **68,232** diet records for **661** bird species. This is a growing database, and while it is currently North American biased, we hope to continue adding avian diet data from around the world.
 
 You can find the development version of the database (which may include more recent records than what is available in the R package but which may still require data cleaning) [here](https://github.com/hurlbertlab/dietdatabase/blob/master/AvianDietDatabase.txt).
 
@@ -41,22 +41,22 @@ A summary of the total number of records by species, and the total number of spe
 ``` r
 dbSummary()
 #> $numRecords
-#> [1] 56008
+#> [1] 68632
 #> 
 #> $numSpecies
-#> [1] 600
+#> [1] 661
 #> 
 #> $numStudies
-#> [1] 778
+#> [1] 896
 #> 
 #> $recordsPerSpecies
 #> # A tibble: 600 x 3
 #>    Common_Name                                   Family               n
 #>    <chr>                                         <chr>            <int>
 #>  1 Abert's Towhee                                Passerellidae       17
-#>  2 Acadian Flycatcher                            Tyrannidae          37
+#>  2 Acadian Flycatcher                            Tyrannidae         150
 #>  3 Acorn Woodpecker                              Picidae             70
-#>  4 Adelaide's Warbler                            Parulidae           33
+#>  4 Adelaide's Warbler                            Parulidae           34
 #>  5 African Pygmy-Goose                           Anatidae            10
 #>  6 Alder/Willow Flycatcher (Traill's Flycatcher) Tyrannidae          87
 #>  7 American Avocet                               Recurvirostridae     8
@@ -66,21 +66,20 @@ dbSummary()
 #> # ... with 590 more rows
 #> 
 #> $speciesPerFamily
-#> # A tibble: 99 x 4
-#>    Order            Family        SpeciesWithData PercentComplete
-#>    <chr>            <chr>                   <dbl>           <dbl>
-#>  1 Accipitriformes  Accipitridae               25              71
-#>  2 Accipitriformes  Pandionidae                 1             100
-#>  3 Anseriformes     Anatidae                  103              88
-#>  4 Bucerotiformes   Upupidae                    0               0
-#>  5 Caprimulgiformes Apodidae                    2              20
-#>  6 Caprimulgiformes Caprimulgidae               4              40
-#>  7 Caprimulgiformes Trochilidae                11              37
-#>  8 Cathartiformes   Cathartidae                 3              75
-#>  9 Charadriiformes  Alcidae                     1               4
-#> 10 Charadriiformes  Charadriidae                1               6
-#> # ... with 89 more rows
-```
+#> # A tibble: 99 x 5
+#>    Order            Family        SpeciesWithData TotalSpeciesABA PercentComplete
+#>    <chr>            <chr>                   <dbl>           <dbl>           <dbl>
+#>  1 Accipitriformes  Accipitridae               25              35              71
+#>  2 Accipitriformes  Pandionidae                 1               1             100
+#>  3 Anseriformes     Anatidae                  102             116              88
+#>  4 Bucerotiformes   Upupidae                    0               1               0
+#>  5 Caprimulgiformes Apodidae                    2              10              20
+#>  6 Caprimulgiformes Caprimulgidae               5              10              50
+#>  7 Caprimulgiformes Trochilidae                16              34              47
+#>  8 Cathartiformes   Cathartidae                 3               4              75
+#>  9 Charadriiformes  Alcidae                     2              23               9
+#> 10 Charadriiformes  Charadriidae                1              17               6
+#> # ... with 89 more rows```
 
 Diet\_Type
 ----------
