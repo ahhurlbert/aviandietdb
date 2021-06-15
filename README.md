@@ -332,6 +332,6 @@ Final thoughts
 
 1.  If you have any suggestions on the package please feel free to post an [issue](https://github.com/ahhurlbert/aviandietdb/issues).
 
-2.  We will be submitting the Avian Diet Database as a formal publication with a DOI soon, but if you would like to cite it, for the moment use: Hurlbert, AH, AM Olsen, P Winner. 2020. Avian Diet Database. <https://github.com/ahhurlbert/aviandietdb>
+2.  We will be submitting the Avian Diet Database as a formal publication with a DOI soon, but if you would like to cite it, for the moment use: Hurlbert, AH, AM Olsen, MM Sawyer, and PM Winner. 2020. Avian Diet Database. https://doi.org/10.5281/zenodo.4960688
 
 3.  If you are aware of a quantitative study on avian diets that is NOT in the database (especially for North American species), please [post an issue in the Avian Diet Database development repo](https://github.com/hurlbertlab/dietdatabase/issues) with "study with diet data -- \[Author Year\]" as the subject line.
