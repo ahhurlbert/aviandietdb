@@ -3,7 +3,7 @@
 #' Quantitative data on the diet of (mostly North American at the moment) bird species
 #' including contextual information about how, where, and when those data were collected.
 #'
-#' This data object was most recently updated on 20 February 2020.
+#' This data object was most recently updated on 2 June 2021.
 #'
 #' The database is a work in progress and the most up to date version can be found on Github: <https://github.com/hurlbertlab/dietdatabase>
 #'
@@ -11,7 +11,7 @@
 #'
 #' @usage data(dietdb)
 #'
-#' @format A dataframe with 56008 rows and 42 variables
+#' @format A dataframe with 67894 rows and 42 variables
 #' \describe{
 #'   \item{Common_Name}{The common name of the species whose diet is being characterized, following the taxonomic authority in Taxonomy}
 #'   \item{Scientific_Name}{The genus and species of the species whose diet is being characterized, following the most recent Clements / eBird checklist}
