@@ -79,7 +79,8 @@ dbSummary()
 #>  8 Cathartiformes   Cathartidae                 3               4              75
 #>  9 Charadriiformes  Alcidae                     2              23               9
 #> 10 Charadriiformes  Charadriidae                1              17               6
-#> # ... with 89 more rows```
+#> # ... with 89 more rows
+```
 
 Diet\_Type
 ----------
