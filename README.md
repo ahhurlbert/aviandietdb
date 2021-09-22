@@ -7,7 +7,7 @@ aviandietdb
 <!-- badges: end -->
 **aviandietdb** provides access to the Avian Diet Database, which contains quantitative diet data for bird species as well as contextual information about where and when those data were collected.
 
-The archived database currently includes **68,258** diet records for **664** bird species. This is a growing database, and while it is currently North American biased, we hope to continue adding avian diet data from around the world.
+The archived database currently includes **73,075** diet records for **759** bird species. This is a growing database, and while it is currently North American biased, we hope to continue adding avian diet data from around the world.
 
 You can find the development version of the database (which may include more recent records than what is available in the R package but which may still require data cleaning) [here](https://github.com/hurlbertlab/dietdatabase/blob/master/AvianDietDatabase.txt).
 
@@ -41,13 +41,13 @@ A summary of the total number of records by species, and the total number of spe
 ``` r
 dbSummary()
 #> $numRecords
-#> [1] 68258
+#> [1] 73075
 #> 
 #> $numSpecies
-#> [1] 664
+#> [1] 759
 #> 
 #> $numStudies
-#> [1] 898
+#> [1] 993
 #> 
 #> $recordsPerSpecies
 #> # A tibble: 600 x 3
@@ -332,6 +332,6 @@ Final thoughts
 
 1.  If you have any suggestions on the package please feel free to post an [issue](https://github.com/ahhurlbert/aviandietdb/issues).
 
-2.  We will be submitting the Avian Diet Database as a formal publication with a DOI soon, but if you would like to cite it, for the moment use: Hurlbert, AH, AM Olsen, MM Sawyer, and PM Winner. 2020. Avian Diet Database. https://doi.org/10.5281/zenodo.4960688
+2.  We will be submitting the Avian Diet Database as a formal publication with a DOI soon, but if you would like to cite it, for the moment use: Hurlbert, AH, AM Olsen, MM Sawyer, and PM Winner. 2021. Avian Diet Database. Scientific Data, in press. https://doi.org/10.5281/zenodo.5523102.
 
 3.  If you are aware of a quantitative study on avian diets that is NOT in the database (especially for North American species), please [post an issue in the Avian Diet Database development repo](https://github.com/hurlbertlab/dietdatabase/issues) with "study with diet data -- \[Author Year\]" as the subject line.
