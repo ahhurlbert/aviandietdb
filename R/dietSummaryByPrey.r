@@ -73,7 +73,7 @@ dietSummaryByPrey = function(preyName,
       return(NULL)
     }
     if ('any' %in% season) {
-      season = unique(diet$Observation_Season)
+      season = unique(dietdb$Observation_Season)
     }
   }
 
@@ -197,17 +197,34 @@ dietSummaryByPrey = function(preyName,
 
 
   if (speciesMean) {
+
+    numAnalysesBySpecies = dietdb %>%
+      filter(Common_Name %in% dietsub$Common_Name[dietsub$Diet_Type != "Occurrence"]) %>%
+
+      distinct(Source, Common_Name, Subspecies, Family, Observation_Year_Begin, Observation_Month_Begin,
+               Observation_Year_End, Observation_Month_End, Observation_Season, Analysis_Number,
+               Bird_Sample_Size, Habitat_type, Location_Region, Location_Specific, Item_Sample_Size, Diet_Type, Study_Type, Sites) %>%
+
+      group_by(Common_Name, Diet_Type) %>%
+
+      summarize(numAnalyses = n())
+
+
+
     output = preySummary %>%
       group_by(Common_Name, Family, Diet_Type, Prey_Name, Prey_Level) %>%
-      summarize(Mean_Fraction_Diet = mean(Fraction_Diet, na.rm = TRUE)) %>%
+      summarize(Sum_Fraction_Diet = sum(Fraction_Diet, na.rm = TRUE)) %>%
+      left_join(numAnalysesBySpecies, by = c('Common_Name', 'Diet_Type')) %>%
+      mutate(Mean_Fraction_Diet = Sum_Fraction_Diet/numAnalyses) %>%
       arrange(Diet_Type, desc(Mean_Fraction_Diet)) %>%
       mutate(Prey_Stage = case_when(
         preyStage == 'any' ~ '',
         preyStage != 'any' ~ preyStage
-      )) %>%
+        )) %>%
       select(Common_Name, Family, Diet_Type, Mean_Fraction_Diet, Prey_Name, Prey_Level, Prey_Stage) %>%
       rename(Fraction_Diet = Mean_Fraction_Diet) %>%
       data.frame()
+
   } else {
     output = preySummary
   }
