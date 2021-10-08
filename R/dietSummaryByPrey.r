@@ -42,8 +42,10 @@ dietSummaryByPrey = function(preyName,
 
   if (preyLevel == 'Species') { preyLevel = 'Scientific_Name' }
 
-  if (!preyLevel %in% c('Kingdom', 'Phylum', 'Class', 'Order', 'Suborder',
-                        'Family', 'Genus', 'Scientific_Name')) {
+  allTaxonomicLevels = c('Kingdom', 'Phylum', 'Class', 'Order', 'Suborder',
+                         'Family', 'Genus', 'Scientific_Name')
+
+  if (!preyLevel %in% allTaxonomicLevels) {
     warning("Please specify one of the following taxonomic levels for describing prey:\n   Kingdom, Phylum, Class, Order, Suborder, Family, Genus, or Scientific_Name")
     return(NULL)
   }
@@ -166,6 +168,13 @@ dietSummaryByPrey = function(preyName,
 
   if ("Occurrence" %in% dietType & nrow(dietsub[dietsub$Diet_Type == "Occurrence", ]) > 0) {
 
+
+    # TO FIX:
+    # Warning messages:
+    # 1: In max(Fraction_Diet, na.rm = T) :
+    #  no non-missing arguments to max; returning -Inf
+
+
     preySummary_Occurrence = dietsub %>%
 
       filter(Diet_Type == "Occurrence") %>%
@@ -199,8 +208,22 @@ dietSummaryByPrey = function(preyName,
   if (speciesMean) {
 
     numAnalysesBySpecies = dietdb %>%
-      filter(Common_Name %in% dietsub$Common_Name[dietsub$Diet_Type != "Occurrence"]) %>%
+      filter(Common_Name %in% unique(preySummary$Common_Name),
+             Diet_Type %in% dietType) %>%
 
+      # First get distinct records that include prey names at or below the taxonomic level of preyName
+      distinct(Source, Common_Name, Subspecies, Family, Observation_Year_Begin, Observation_Month_Begin,
+               Observation_Year_End, Observation_Month_End, Observation_Season, Analysis_Number,
+               Bird_Sample_Size, Habitat_type, Location_Region, Location_Specific, Item_Sample_Size, Diet_Type, Study_Type, Sites,
+               !!! rlang::syms(taxonLevel)) %>%
+
+      # Drop NA values in the taxonLevel field (which otherwise mess up the next filter step)
+      drop_na(!!! rlang::syms(taxonLevel)) %>%
+
+      # Remove records that haven't been identified down to taxonLevel
+      filter(get(taxonLevel) != "") %>%
+
+      # Then of those, identify the distinct set of analyses
       distinct(Source, Common_Name, Subspecies, Family, Observation_Year_Begin, Observation_Month_Begin,
                Observation_Year_End, Observation_Month_End, Observation_Season, Analysis_Number,
                Bird_Sample_Size, Habitat_type, Location_Region, Location_Specific, Item_Sample_Size, Diet_Type, Study_Type, Sites) %>%
