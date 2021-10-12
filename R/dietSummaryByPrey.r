@@ -240,12 +240,13 @@ dietSummaryByPrey = function(preyName,
       summarize(Sum_Fraction_Diet = sum(Fraction_Diet, na.rm = TRUE)) %>%
       left_join(numAnalysesBySpecies, by = c('Common_Name', 'Diet_Type')) %>%
       mutate(Mean_Fraction_Diet = Sum_Fraction_Diet/numAnalyses) %>%
+      rename(Number_of_Analyses = numAnalyses) %>%
       arrange(Diet_Type, desc(Mean_Fraction_Diet)) %>%
       mutate(Prey_Stage = case_when(
         preyStage == 'any' ~ '',
         preyStage != 'any' ~ preyStage
         )) %>%
-      select(Common_Name, Family, Diet_Type, Mean_Fraction_Diet, Prey_Name, Prey_Level, Prey_Stage) %>%
+      select(Common_Name, Family, Diet_Type, Mean_Fraction_Diet, Number_of_Analyses, Prey_Name, Prey_Level, Prey_Stage) %>%
       rename(Fraction_Diet = Mean_Fraction_Diet) %>%
       data.frame()
 
